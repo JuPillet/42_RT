@@ -5,10 +5,11 @@ Engine::Engine() {
 		std::cout << "Making a graphics engine" << std::endl;
 	}
 
-	build_glfw_window();
+	buildGlfwWindow();
+	run();
 }
 
-void Engine::build_glfw_window() {
+void Engine::buildGlfwWindow() {
 	std::string title = "RT";
 
 	//initialize glfw
@@ -25,6 +26,7 @@ void Engine::build_glfw_window() {
 		if (debugMode) {
 			std::cout << "Successfully made glfw window called \"" << title << "\", width :" << width << ", height : " << height << std::endl;
 		}
+		glfwSetKeyCallback(window, Engine::keyCallback);
 	} else {
 		if (debugMode) {
 			std::cout << "GLFW window creation failed" << std::endl;
@@ -32,10 +34,28 @@ void Engine::build_glfw_window() {
 	}
 }
 
-Engine::~Engine() {
-	if (debugMode) {
-		std::cout << "End Of Engine" << std::endl;
-
-		glfwTerminate ();
+void Engine::run() {
+	while (!glfwWindowShouldClose(window)) {
+		glfwPollEvents();
 	}
+}
+
+void Engine::keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+	(void)scancode; (void)mods; //Evite les warnings
+
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+		std::cout << "Escape pressed" << std::endl;
+		glfwSetWindowShouldClose(window, GLFW_TRUE);
+	}
+}
+
+Engine::~Engine() {
+	if (debugMode) std::cout << "End Of Engine" << std::endl;
+	if (window) {
+		std::cout << "Window destroyed" << std::endl;
+		glfwDestroyWindow(window);
+		window = nullptr;
+	}
+	glfwTerminate();
+	std::cout << "RT Exited" << std::endl;
 }

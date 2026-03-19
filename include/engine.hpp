@@ -18,5 +18,7 @@ class Engine {
 		GLFWwindow* window{ nullptr };
 
 		//glfw setup
-		void build_glfw_window();
+		void buildGlfwWindow();
+		void run();
+		static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 };

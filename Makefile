@@ -1,9 +1,5 @@
 NAME 		=	rt
 
-LIBFT		=	libft.a
-
-HDLFT		=	libft.h
-
 DIRLIBFT	=	./libft/
 
 DIRMLX		=	./minilibx-linux/
@@ -16,16 +12,16 @@ CFLAGS 		=	-Wall -Wextra -Werror -g -std=c++11
 
 FLAGGLFW	=	-lglfw
 
-INCLUDES	=	./includes
+INCLUDES	=	./include
 
-SRCS		=	$(addprefix ./SRCS/, \
+SRC			=	$(addprefix ./src/, \
 					engine.cpp \
 					main.cpp)
 
-OBJSSRCS	=	${SRCS:.c=.o}
+OBJS		=	${SRC:.cpp=.o}
 
-.c.o		:
-	${CC} ${CFLAGS} -I ${INCLUDES} -c $< -o ${<:.c=.o}
+.cpp.o		:
+	${CC} ${CFLAGS} -I ${INCLUDES} -c $< -o ${<:.cpp=.o}
 
 all			:	${HPROJECT}  ${NAME}
 
@@ -34,20 +30,17 @@ all			:	${HPROJECT}  ${NAME}
 #	mv ${DIRLIBFT}${LIBFT} ./
 #	cp ${DIRLIBFT}${HDLFT} ${INCLUDES}
 
-${NAME}		:
-	${CC} ${CFLAGS} -I$(INCLUDES) ${OBJSSRCS} -o ${NAME} ${FLAGGLFW}
+${NAME}		:	${OBJS}
+	${CC} ${CFLAGS} -I$(INCLUDES) ${OBJS} -o ${NAME} ${FLAGGLFW}
 
 #bonus		:	
 #	make BONUS=1 all
 #
-# clean		:
-# 	rm -rf	
+clean		:
+	rm -rf ./${NAME}
 # 
-# fclean		:	clean
-# 	make fclean -C ${DIRLIBFT}
-# 	rm -rf	${NAME} ${NAMELIN} ${NAMEMPRSR} ${NAMELPRSR} ${INCLUDES}${HDLFT} ${INCLUDES}${HDMLX} \
-# 			${LIBFT} ${DIRMLX}${MLX} ${MLX}
+fclean		:	clean
 # 
-# re			:	fclean all
+re			:	fclean all
 
 .PHONY		:	all bonus clean fclean re
