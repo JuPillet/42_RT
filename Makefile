@@ -15,7 +15,7 @@ FLAGGLFW	=	-lglfw
 INCLUDES	=	./include
 
 SRC			=	$(addprefix ./src/, \
-					engine.cpp \
+					Engine.cpp \
 					main.cpp)
 
 OBJS		=	${SRC:.cpp=.o}
@@ -37,10 +37,11 @@ ${NAME}		:	${OBJS}
 #	make BONUS=1 all
 #
 clean		:
-	rm -rf ./${NAME}
-# 
+	rm -rf ${OBJS}
+ 
 fclean		:	clean
-# 
+	rm -rf ./${NAME}
+
 re			:	fclean all
 
 .PHONY		:	all bonus clean fclean re
